@@ -1,6 +1,11 @@
-# Lab-Ex.-No---5-Design-simulate-an-environment-for-Robot-Painting-using-Robo-DK
+### EXP NO: 05
+
+### Date: 25/10/22
+
+# <p align = "center"> Design simulate an environment for Robot Painting using Robo DK </p>
+
  
-## AIM
+### AIM
 To design a and simulate the painting environment for a serial manipluator and teach the surface for the same. 
 
 ## Software  Required
@@ -84,8 +89,6 @@ of the spray gun, as shown in the next imageGetting Started with RoboDK 7
 4. Once an estimate of the coordinates is obtained it is possible to touch up these values manually by
 double clicking the Paint gun object. The mouse wheel can be used on top of each case to quickly
 update the position on the main screen.
-Note: These are estimate values according to the 3D drawings. If the definition of the TCP is calibrated on the
-robot it is possible to import it by pasting the coordinates in that box.
 By default, RoboDK will define the TCP at the position [X,Y,Z]=[0,0,200] mm. This can be changed by entering
 the coordinates manually and/or by moving the TCP holding the ALT+Shift key as shown in the next image:
 1. Hold ALT+Shift or select the highlighted button from the toolbar
@@ -95,8 +98,6 @@ of the spray gun, as shown in the next imageGetting Started with RoboDK 7
 4. Once an estimate of the coordinates is obtained it is possible to touch up these values manually by
 double clicking the Paint gun object. The mouse wheel can be used on top of each case to quickly
 update the position on the main screen.
-Note: These are estimate values according to the 3D drawings. If the definition of the TCP is calibrated on the
-robot it is possible to import it by pasting the coordinates in that box.
 ![image](https://user-images.githubusercontent.com/36288975/173729267-d5599e55-30ad-4a59-bfda-3575116efcc6.png)
 Create Targets
 Robot positions are recorded as Targets. Follow these steps to create two targets as a new home target and
@@ -108,33 +109,15 @@ green dot.
 4. Hold the Alt key and move the robot by dragging it through the TCP or the robot flange to a safe
 position, free of collisions with any objects. Alternatively, move the coordinates of the Tool Frame (TCP)
 with respect to the reference Frame.
-5. Use the Other configurations section to switch between different robot configurations and make sure
-that none of the robot axes are close to the axis limits.
-Tip: In general, it is better if the first target of a program has the joint axes as centered as possible (the joint
-sliders are as centered as possible, as shown in the following image). This makes sure that the robot won’t
-reach the axis limits as it follows linear moves along the program. This is possible by changing the robot
-configuration.
-6. Select Program Teach Target (Ctrl+T), or the corresponding button in the toolbar (as shown in
+5. Select Program Teach Target (Ctrl+T), or the corresponding button in the toolbar (as shown in
 the image). The target will be placed as a dependency of the active reference frame and will
 automatically remember the current robot position (cartesian and joints axes).
 In this example, the robot joint coordinates used for the first target are: [-150, -75, -90, -60, 70, 110]
 deg. These values can be copied from this text and pasted in the Joint axis jog of the robot panel
 using the corresponding button.
-
-
 7. Rename the first target as Home by pressing F2. Alternatively, select ToolsRename item.
 8. Move the robot closer to one edge of the part (by dragging the tool using the Alt key, entering
 coordinates or jogging the axis manually)
-In this example we used the following robot joint coordinates [0,0,200,180,0,180] deg.
-9. Select Program Teach Target (Ctrl+T) or the appropriate button in the toolbar to create a new
-target
-10. Rename the target to Approach as shown in step 7
-11. Select the Home target and the Approach target alternatively to see the robot moving between the two
-targets
-12. Right click the target and select Teach Current Position (Alt+double click) if a different position needs
-to be recorded for one of the targets
-13. Right click the target and select Target Options… (F3) to open the target options window shown
-in the next image
 Add an Approach Program
 Follow these steps to create a program that moves from the Home target to the Approach target:
 1. Select Program Add Program from the menu or the corresponding button in the toolbar (as
@@ -149,7 +132,6 @@ Note: If no target is selected, a new target will be created at the same locatio
 6. Select Program Move Joint Instruction again
 Double click the ApproachMove program and it will execute the program simulation. The simulation bar and
 an estimated cycle time will be displayed.   
-
 Create Targets on Surface
 The Create Targets on Surface feature, is useful for applications such as painting or inspection:
 1. Select Program Teach Target(s) on Surface (Ctrl+Shift+T)
@@ -162,7 +144,6 @@ the left/right keys.
 5. Hold Alt to move an existing target
 6. Hold Alt+Shift to move an existing target while keeping it on the surface
 7. Select Esc key or right click on the screen and select Done to exit the Create Targets on Surface mode
-8. ![image](https://user-images.githubusercontent.com/36288975/173729366-e0d49a75-454d-4366-b7f5-1e02de369d1d.png)
 1. Select all the targets created on the surface and right click
 Tip: Hold the Ctrl key to select multiple targets. Alternatively, select the Target 3, hold shift, then select Target
 10 to select all targets between Target 3 and Target 10.
@@ -170,10 +151,6 @@ Tip: Hold the Ctrl key to select multiple targets. Alternatively, select the Tar
 3. Enter Top Paint. All selected targets will be renamed and numbered.
 4. Right click on the targets again and select Create Program. A new program will be generated. The first
 movement will be a joint move and following movements will be linear.
-5. Select F2 to rename the program to PaintTop
-6. Double click the PaintTop program to see the simulation moving along the targets
-7. If required, reorder the movements by dragging the move instructions inside the program
-Add a Retract Program
 Similar to the previous operations:
 1. With the robot placed at the last target, move the robot upwards by increasing the Z coordinate of the
 TCP with respect to the reference frame in the robot panel (highlighted case in the next image)
@@ -183,30 +160,21 @@ to Retract by pressing F2 key.
 4. Select the Home target
 5. Select Program Move Joint Instruction. A new move instruction will be added, linked to the
 Home target
-
 ![image](https://user-images.githubusercontent.com/36288975/173729436-d4d9e8b7-7504-4b24-beda-dd213813557d.png)
-
-
 
 ## Program
 ```
-
 import sys
 import os
 sys.path.append(os.path.abspath(r"""E:/RoboDK/Posts/""")) # temporarily add path to POSTS folder
-
 from KUKA_KRC2 import *
-
 try:
   from robodk.robomath import PosePP as p
 except:
   # This will be removed in future versions of RoboDK
   from robodk import PosePP as p
-
-
 print('Total instructions: 9')
 r = RobotPost(r"""KUKA_KRC2""",r"""KUKA KR 10 R1100 sixx""",6, axes_type=['R','R','R','R','R','R'], ip_com=r"""127.0.0.1""", api_port=20500, prog_ptr=2377978405712, robot_ptr=2377971867552)
-
 r.ProgStart(r"""Mainprog""")
 r.RunMessage(r"""Program generated by RoboDK v5.4.1 for KUKA KR 10 R1100 sixx on 25/06/2022 17:41:55""",True)
 r.RunMessage(r"""Using nominal kinematics.""",True)
@@ -223,14 +191,10 @@ r.MoveL(p(1254.3,-793.956,621.299,-180,16.2113,180),[-17.094,-63.3582,49.9712,14
 r.MoveL(p(1354.51,-793.956,621.243,-180,16.2113,180),[-15.1431,-45.9352,20.6798,11.5454,70.4288,-14.5217],[0,0,0])
 r.ProgFinish(r"""Mainprog""")
 r.ProgSave(r"""C:/Users/Sudharshna/Documents/RoboDK""",r"""Mainprog""",True,r"""E:/RoboDK/Other/VSCodium/VSCodium.exe""")
-
 ```
 
 ## SIMULATION
 ![2](https://user-images.githubusercontent.com/75235759/204428192-98e6cd99-0e88-44d5-a35a-33fff072ada3.png)
-
-
-
 
 ## RESULT
 The painting environment for a serial manipluator has been created and the surface for the same has been thaught. 
